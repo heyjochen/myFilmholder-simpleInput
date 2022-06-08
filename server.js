@@ -36,21 +36,22 @@ MongoClient.connect(process.env.DB_STRING, { useUnifiedTopology: true }).then(
           date: req.body.date,
           color: req.body.color,
           notes: req.body.notes,
-          color: req.body.color,
         })
         .then((result) => {
-          console.log("Photo Added");
+          console.log("Photo Added added to DB");
           res.redirect("/");
         })
         .catch((error) => console.error(error));
     });
 
     app.delete("/deletePhoto", (req, res) => {
-      db.collection("myFilmHolder")
-        // .deleteOne({ stageName: request.body.stageNameS })
+      const { id } = req.params;
+      console.log(id);
+      photosCollection
+        .deleteOne({id})
         .then((result) => {
           console.log("Photo Deleted");
-          response.json("Photo Deleted");
+          res.json("Photo Deleted");
         })
         .catch((error) => console.error(error));
     });
