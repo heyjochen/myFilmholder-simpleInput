@@ -21,7 +21,7 @@ MongoClient.connect(process.env.DB_STRING, { useUnifiedTopology: true }).then(
         .find()
         .toArray()
         .then((data) => {
-          response.render("index.ejs", { photo: data });
+          res.render("index.ejs", { photo: data });
         })
         .catch((error) => console.error(error));
     });
@@ -29,13 +29,18 @@ MongoClient.connect(process.env.DB_STRING, { useUnifiedTopology: true }).then(
     app.post("/addPhoto", (req, res) => {
       photosCollection
         .insertOne({
-          //   stageName: request.body.stageName,
-          //   birthName: request.body.birthName,
-          //   likes: 0,
+          title: req.body.title,
+          camera: req.body.camera,
+          lens: req.body.lens,
+          film: req.body.film,
+          date: req.body.date,
+          color: req.body.color,
+          notes: req.body.notes,
+          color: req.body.color,
         })
         .then((result) => {
           console.log("Photo Added");
-          response.redirect("/");
+          res.redirect("/");
         })
         .catch((error) => console.error(error));
     });
